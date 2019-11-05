@@ -1,0 +1,11 @@
+op1<-function() {
+    cantidad<- readline("Cuantos Nodos Desea Ingresar ? ")
+    for(i in cantidad) { 
+      cat("Ingrese el nodo",i)
+      x<-Nodo$new()
+      info<- readline("Ingrese el dato")
+      x$dato<-info
+      listanodos<-append(nodos,x)
+    }#fin for  
+    
+  }#fin fun

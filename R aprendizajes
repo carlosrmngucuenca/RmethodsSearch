@@ -1,0 +1,22 @@
+R aprendizajes
+
+conbinar vectores con c()
+repetir vestor group and values
+
+exstracting values
+zacar valores de un vestor , multiples .
+
+drop values from a vector
+i can change values , and many positions.
+copias como asignaciones
+
+compara en un vestor con una datos de lmismo vector.
+
+ baskets.of.Granny <- c(12, 4, 4, 6, 9, 3)
+> baskets.of.Geraldine <- c(5, 3, 2, 2, 12, 9)
+
+vesctores de strings puedo saber longitud y la cantidad de letras
+
+puedo crear con letters una secuencia . y sacar con un inicio :fin 
+
+paste me permite concatenar muy facilmente, revisar letters
