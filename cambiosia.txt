@@ -1,0 +1,54 @@
+# este docuemneto contiene copy pastes de el original de IA
+
+ #cantidad<-readline("Cuantos Nodos Desea Ingresar ? ")
+           #n<-strtoi(cantidad)
+           #secuencia<-1:n
+
+          for(i in datoNode ) { 
+             
+             objNodo<-Nodo$new()
+             objNodo$set_dato(as.character(secuencia[i]))
+             nodotag<-paste0("nodo",secuencia[i])
+             nodos[[nodotag]] <-objNodo
+             
+           }#fin for  
+
+# segunda opcion
+
+           dataempty<-dataf[!((dataf$fin)==""),c(1,2,3)]
+           dataempty
+          
+           data<-unique(dataf[,c(1,4)])
+           n<-nrow(data)
+           for (variable in 1:n) {
+               nombre_nodo<-data[variable,1]
+               heuristica_nodo<-data[variable,2]
+               
+           }
+           
+             listahijos=list()
+             info<- readline("Ingrese el Nodo Inicio ->  : ")
+             nodotag<-paste0("nodo",info)
+             infodatoInicio<-nodotag
+             nodoInicio<-Nodo$new()
+             nodoInicio<-nodos[[infodatoInicio]]
+          
+             cat("Ingrese los decendientes de : ->  ",infodatoInicio," hijos ")
+             decendientes<- readline("Ingrese los enlaces a este nodo mediantes comas ej: 1,2 ->  : ")
+             cat("aqui for \n")
+             strsplit(decendientes, ",")
+             n<-length(strsplit(decendientes, ",")[[1]])
+             cat("aqui entra al n ",n,"\n")
+             hijos<-strsplit(decendientes, ",")[[1]]
+             nodoshijos<-list()
+            
+             for(i in 1:n ) { 
+             infodatohijo<-hijos[i]
+             nodotaghijos<-paste0("nodo",hijos[i])
+             nodofin<-nodos[[nodotaghijos]]
+             nodoshijos[[nodotaghijos]]<-nodofin
+             cat("aqui entra al for ",n,"y",nodotaghijos,"i vale",i, "\n")
+            
+             
+           }#fin for  
+           nodoInicio$set_hijos(nodoshijos)

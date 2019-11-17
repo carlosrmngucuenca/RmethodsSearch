@@ -2,16 +2,319 @@
 title: "R Notebook"
 output: html_notebook
 ---
+```{r}
+BDD<-function(Raiz,Meta){
+  
+  cola1<-c()
+  cola2<-c()
+  Raiz<- nodos[[Raiz$get_dato()]]
+  Meta<- nodos2ways[[Meta$get_dato()]]
+  if(Raiz$get_dato()==Meta$get_dato()){
+    print("encontrado")
+  }
+  
+  cola1<-c(cola1,Raiz)
+  cola2<-c(cola2,Meta)
+  colan1<-c()
+  colan2<-c()
+  while (length(cola1) >0 || length(cola2) >0) {
+    cola1aux<-c()
+    cola2aux<-c()
+    print(cola1[[1]])
+    tam_cola1<-length(col1)
+    for (variable in tam_cola1) {
+      cat("el valor de variable en cola1","\n")
+      print(variable)
+      cat("--------fin------------------","\n")
+      if (any(cola1[[tam_cola1]]$get_dato() == colan2)) {
+        print("encontrado")
+        break()
+      }#fin if
+       if(length(cola1[[tam_cola1]]$get_lista())!=0){
+           hijos<-cola1[[tam_cola1]]$get_lista()
+           cat("el valor de la lista hijos","\n")
+           print(hijos)
+           cat("--------fin lista hijos------------------","\n")
+          cola1<-c()
+           for (variable in hijos) {
+             cat("el valor de un hijo en la lista hijos","\n")
+           print(variable)
+           cat("--------fin hijo de la lista hijos------------------","\n")
+            if (variable$get_visited() == FALSE && variable$get_added()==FALSE ){
+              cat("ingresando hijo ",variable$get_dato(),"\n")
+                print(variable$get_dato())
+              cat("--------fin------------------","\n")
+              variable$set_added(TRUE)
+              dato<-variable$get_dato()
+              colan1<-c(cola,dato)
+              cola1<-c(cola1,variable)
+              
+          }
+          
+          #cola1aux[[1]]$get_lista()[[1]]
+        }
+            
+            
+       }else{
+          cola1<-cola1[-1]
+            #break()
+          }
+         
+     
+    }
+    
+   tam_cola2<-length(col2)
+   for (variable in 1:tam_cola2) {
+     cat("el valor de variable en cola2","\n")
+      print(variable)
+      cat("--------fin------------------","\n")
+      if (any(tam_cola2[[tam_cola2]]$get_dato() == colan1)) {
+        print("encontrado")
+        break()
+      }#fin if
+       if(length(cola2[[tam_cola2]]$get_lista())!=0){
+          hijos<-cola2[[tam_cola2]]$get_lista()
+          cat("el valor de la lista hijos","\n")
+           print(hijos)
+           cat("--------fin lista hijos------------------","\n")
+          cola2<-c()
+          for (variable in hijos) {
+            cat("el valor de un hijo en la lista hijos","\n")
+           print(variable)
+           cat("--------fin hijo de la lista hijos------------------","\n")
+            if (variable$get_visited() == FALSE && variable$get_added()==FALSE ){
+              cat("ingresando hijo ",variable$get_dato(),"\n")
+                print(variable$get_dato())
+              cat("--------fin------------------","\n")
+            variable$set_added(TRUE)
+              dato<-variable$get_dato()
+              colan2<-c(cola,dato)
+              cola2<-c(cola1,variable)
+              
+          }
+          
+          #cola1aux[[1]]$get_lista()[[1]]
+        }
+            
+            
+       }else{
+            cola2<-cola2[-1]
+            #break
+          }
+          
+     
+    }
+   
+   
+  }#fin while
+  #print("sale del while")
+  
+  
+  
+}#fin BDD
+
+NodoR<-nodos[["A"]]
+NodoM<-nodos[["F"]]
+BDD(NodoR,NodoM)
+```
+
+```{r}
+
+dataemptyh<-dataf[!((dataf$fin)==""),c(1,2,4)]
+           numerofilas<-nrow(dataemptyh)
+           solonodos<-dataemptyh[,c(1,2)]
+           bidireccional<-solonodos
+           nodosbidireccional<-nodos
+           for (variable in 1:numerofilas) {
+             father<-bidireccional[variable,1]
+             son<-bidireccional[variable,2]
+             
+             adecendiente<-nodosbidireccional[[father]]
+             nodosbidireccional[[son]]$set_hijos(adecendiente)
+            
+           }
+           
+           
+```
+
+```{r}
+arnod<-read.csv("ArchivoPrubas.csv",header = TRUE, sep = ",",stringsAsFactors = FALSE)
+dataf=data.frame(arnod)
+data<-unique(dataf[,c(1,4)])
+data
+dataf <- dataf[0,]
+dataf
+#dataf
+#datap<-dataf[!((dataf$fin)==""),c(1,2,3)]
+#datap
+#node<-sort(union(unique(datap$Inicio),unique(datap$fin)),decreasing = FALSE)
+```
+
+```{r}
+ dataempty<-dataf[!((dataf$fin)==""),c(1,2,4)]
+dataempty
+queue<-c()
+colavisiatados<-c()
+cola<-function(nodo){
+  
+  queue <- c(queue,nodo)
+  ordq<-sort(queue)
+  return(ordq[1])
+}
+BCU<-function(Raiz,Meta){
+  
+  cola<- Queue$new()
+  
+  cola$add(Raiz)
+  cat("Recorrido  : ->  ",Raiz$get_dato(),"\n")
+  #cat("el nuevo valor e raiz es  : ->  ",Raiz$get_dato(),"\n")
+  #cat("el valor de la cola al entrar es : ->  ",Raiz$get_dato(),"\n")
+  while (cola$vacia()!=TRUE) {
+    #print("entras \n")
+    if(Raiz$get_dato()==Meta$get_dato()){
+      cola$remove()
+      
+      break
+    }else{
+      
+      Raiz$set_visitado(TRUE)
+      #cat("el valor visiatdo  de la Raiz es : ->  ",Raiz$get_visited(),"\n")
+      cola$remove()
+      #cat("el valor qque se remueve es   es : ->  ",r,"\n")
+       x<-Migrafo$matriz[Raiz$get_dato(),]
+      rep<-sort(x[x>0])
+      colavisiatados<-c(colavisiatados,rep[1])
+      
+      if(cola$vacia()!=TRUE){
+        Raiz<-cola$peek();
+        cat("Recorrido  : ->  ",Raiz$get_dato(),"\n")
+        
+      }
+      
+      
+    }
+    
+  }
+  #print("sale del while")
+  return(0)
+  
+  
+  
+}#fin BCU
+```
+```{r}
+df <- data.frame(Nodo=c("0"), Heuristica=c(0), stringsAsFactors=FALSE) 
+df
+df<-rbind(df,list("A","D"))
+df[2,]
+```
+
+```{r}
+mi_df = data.frame(
+  "Nodo" = c("A"), 
+  "heuristica" = c(0),stringsAsFactors = FALSE
+)
+
+str(mi_df)
+
+mi_df<-rbind(mi_df,list("A",16))
+mi_df<-rbind(mi_df,list("B",20))
+r<-mi_df$heuristica
+#r
+#mi_df<-mi_df[-1,]
+mi_df
+length(mi_df)
+```
+```{r}
+
+```
+
+```{r}
+cat("prueba de BCU \n")
+cargo_nodos_nombres<-(LETTERS[1:4])
+cargo_h<-c(10,10,15,20)
+Migrafo<-Grafo$new()
+str(Migrafo)
+#matriz <-matrix(0,tam,tam)
+#matriz
+Migrafo$set_matriz_aristapeso(4,c("A","B","C","D"))
+Migrafo$matriz["A","B"]<-1
+Migrafo$matriz
+
+
+ dataemptyp<-dataf[!((dataf$fin)==""),c(1,2,3)]
+           node<-sort(union(unique(dataemptyp$Inicio),unique(dataemptyp$fin)),decreasing = FALSE)
+           node
+           Migrafo$set_matriz_aristapeso(length(node),node)
+           numerofilas<-nrow(dataemptyp)
+           solonodos<-dataemptyp[,c(1,2,3)]
+           print("hola")
+           solonodos
+           for (variable in 1:numerofilas) {
+             i<-solonodos[variable,1]
+             j<-solonodos[variable,2]
+             p<-solonodos[variable,3]
+             Migrafo$matriz[i,j]<-p
+           }
+           print("hola")
+      Migrafo$matriz
+      as.logical(Migrafo$matriz["A",]!=0)
+      
+      c<-Migrafo$matriz["A","B"]
+      c
+      which(Migrafo$matriz["A",]>0)
+      
+      x<-Migrafo$matriz["A",]
+      rep<-sort(x[x>0])
+      t<-Migrafo$matriz["A","A"]
+      t
+      nume<-as.numeric(rep[1])
+      
+```
+
+```{r}
+ arnod<-read.csv("ArchivoPrubas.csv",header = TRUE, sep = ",",stringsAsFactors = FALSE)
+           dataf=data.frame(arnod)
+           arnod
+           data<-unique(dataf[,1])
+           
+           data
+```
+```{r}
+
+dataempty<-dataf[!((dataf$fin)==""),c(1,2,3)]
+dataempty
+node<-sort(union(unique(dataempty$Inicio),unique(dataempty$fin)),decreasing = FALSE)
+node
+
+```
 
 This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
 
 Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*. 
 ```{r}
 arnod<-read.csv("ArchivoPrubas.csv",header = TRUE, sep = ",",stringsAsFactors = FALSE)
-sort(arnod$Peso)
-c<-arnod[1,1:4]
+dataf=data.frame(arnod)
+dataf
+
+#dataf[c(1,4)]
+#nrow(dataf)
 
 
+```
+
+
+```{r}
+dataempty<-dataf[!((dataf$fin)==""),c(1,2,3)]
+numerofilas<-nrow(dataempty)
+solonodos<-dataempty[,c(1,2)]
+solonodos
+for (variable in 1:numerofilas) {
+  father<-solonodos[variable,1]
+  son<-solonodos[variable,2]
+  decendiente<-nodos[[son]]
+  nodos[[padre]]$set_hijos(decendiente)
+}
 ```
 
 ```{r}
@@ -131,6 +434,202 @@ some.states <- data.frame(Region = state.region,state.x77)
 some.states <- some.states[1:10, 1:3]
 some.states
 sort(some.states$Population)
+```
+```{r}
+library("igraph")
+dataempty<-dataf[!((dataf$fin)==""),c(1,2)]
+vive <-matrix(c(dataempty$Inicio, dataempty$fin), ncol=2)
+head.matrix(vive)
+g<-graph_from_edgelist(vive)
+plot(g)
+
+```
+```{r}
+BPM<-function(Raiz,Meta){
+  
+  cola<- colapr$new()
+  
+  cola$add(Raiz)
+  cat("Recorrido  : ->  ",Raiz$get_dato(),"\n")
+  #cola$Inicialisar()
+  #cat("el nuevo valor e raiz es  : ->  ",Raiz$get_dato(),"\n")
+  #cat("el valor de la cola al entrar es : ->  ",Raiz$get_dato(),"\n")
+  while (cola$vaciaq()!=TRUE) {
+    #print("entras \n")
+    if(Raiz$get_dato()==Meta$get_dato()){
+      #cola$remove()
+      print("encontrado")
+      print(Raiz$get_dato())
+      break
+    }else{
+      
+      Raiz$set_visitado(TRUE)
+      cat("el valor visiatdo  de la Raiz es : ->  ",Raiz$get_visited(),"\n")
+      print(cola$peek()[1,1])
+      cola$remove()
+      #cola$vaciar
+      cat("el valor qque se remueve es   es : ->  ","\n")
+      if (length(Raiz$get_lista())!=0 ) {
+        cat("el valor de el tam   es : ->  ",length(Raiz$get_lista()),"\n")
+        for (variable in 1:length(Raiz$get_lista())) {
+          cat("el valor de el contador   es : ->  ",variable,"\n")
+          Nodohijo=Raiz$get_lista()[[variable]]
+          cat("el valor de un hijo de un nodo   es : ->  ",Nodohijo$get_dato(),"\n")
+          if (Nodohijo$get_visited() == FALSE && Nodohijo$get_added()==FALSE ){
+            Nodohijo$set_added(TRUE)
+            cola$add(Nodohijo)
+            print("sale de hijo")
+            
+            
+          }
+        }
+      }
+      print("hola")
+      print(cola$peek())
+      if(cola$vaciaq()!=TRUE){
+        Dato<-cola$peek()
+        cat("Entra a refrescar raiz","\n")
+        print(Dato)
+        infoDato<-Dato[1,1]
+        print(infoDato)
+        infoHeu<-Dato[1,2]
+        print(infoHeu)
+        Raiz<-nodos[[infoDato]]
+        print(Raiz)
+        #cola$vaciar()
+        #cola$add(Raiz)
+        cat("Recorrido  : ->  ",Raiz$get_dato(),"\n")
+        
+      }
+      if(cola$vaciaq()==TRUE){
+        cat("nodo no encontrado")
+      }
+      
+      
+    }
+    
+  }
+  #print("sale del while")
+ 
+  
+  
+}
+
+NodoR<-nodos[["A"]]
+NodoM<-nodos[["F"]]
+BPM(NodoR,NodoM)
+```
+
+```{r}
+HCS<-function(Raiz,Meta){
+  
+  cola<- colapr$new()
+  
+  cola$add(Raiz)
+  cat("Recorrido  : ->  ",Raiz$get_dato(),"\n")
+  #cola$Inicialisar()
+  #cat("el nuevo valor e raiz es  : ->  ",Raiz$get_dato(),"\n")
+  #cat("el valor de la cola al entrar es : ->  ",Raiz$get_dato(),"\n")
+  while (cola$vaciaq()!=TRUE) {
+    #print("entras \n")
+    if(Raiz$get_dato()==Meta$get_dato()){
+      #cola$remove()
+      print("encontrado")
+      print(Raiz$get_dato())
+      break
+    }else{
+      
+      Raiz$set_visitado(TRUE)
+      cat("el valor visiatdo  de la Raiz es : ->  ",Raiz$get_visited(),"\n")
+      print(cola$peek()[1,1])
+      cola$remove()
+      #cola$vaciar
+      cat("el valor qque se remueve es   es : ->  ","\n")
+      if (length(Raiz$get_lista())!=0 ) {
+        cat("el valor de el tam   es : ->  ",length(Raiz$get_lista()),"\n")
+        for (variable in 1:length(Raiz$get_lista())) {
+          cat("el valor de el contador   es : ->  ",variable,"\n")
+          Nodohijo=Raiz$get_lista()[[variable]]
+          cat("el valor de un hijo de un nodo   es : ->  ",Nodohijo$get_dato(),"\n")
+          if (Nodohijo$get_visited() == FALSE && Nodohijo$get_added()==FALSE ){
+            Nodohijo$set_added(TRUE)
+            cola$add(Nodohijo)
+            print("sale de hijo")
+            
+            
+          }
+        }
+      }
+      print("hola")
+      print(cola$peek())
+      if(cola$vaciaq()!=TRUE){
+        Dato<-cola$peek()
+        cat("Entra a refrescar raiz","\n")
+        print(Dato)
+        infoDato<-Dato[1,1]
+        print(infoDato)
+        infoHeu<-Dato[1,2]
+        print(infoHeu)
+        Raiz<-nodos[[infoDato]]
+        print(Raiz)
+        cola$vaciar()
+        cola$add(Raiz)
+        cat("Recorrido  : ->  ",Raiz$get_dato(),"\n")
+        
+      }
+      if(cola$vaciaq()==TRUE){
+        cat("nodo no encontrado")
+      }
+      
+      
+    }
+    
+  }
+  #print("sale del while")
+ 
+  
+  
+}
+
+NodoR<-nodos[["A"]]
+NodoM<-nodos[["F"]]
+HCS(NodoR,NodoM)
+```
+
+```{r}
+NodoR<-nodos[["A"]]
+NodoM<-nodos[["C"]]
+micola<-colapr$new()
+#ingresa A
+micola$add(NodoR)
+#micola$Inicialisar()
+#ingresa C
+micola$add(NodoM)
+#se ordena y devuelve primera fila
+micola$peek()
+#se vacia la cola
+micola$vaciar()
+
+
+micola$vaciaq()
+
+#ingresa A otra ves
+micola$add(NodoR)
+#micola$Inicialisar()
+#ingresa C otravez
+micola$add(NodoM)
+print("entra a ver peek")
+print(micola$peek()[1,1])
+ if(micola$vaciaq()!=TRUE){
+              cat("el valor  en la cola    es : ->  ","\n")
+              print("entra en el if")
+            }
+micola$vaciar()
+ if(micola$vaciaq()==TRUE){
+              cat("el valor  en la cola    es : ->  ","\n")
+            }
+#se agrega C
+#micola$add(NodoM)
 ```
 
 ```{r}

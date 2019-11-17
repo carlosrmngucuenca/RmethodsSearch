@@ -1,0 +1,38 @@
+BCU<-function(Raiz,Meta){
+  cola<-c()
+  colavisiatados<-c()
+  root<-Migrafo$matriz[Raiz,Raiz]
+  names(root)<-c(as.character(Raiz))
+  cola<-c(cola,root)
+  while (length(cola)!=0) {
+    if(names(root)==Meta){
+      print("encontrado")
+      break
+    }else{
+      print(names(root))
+      x<-Migrafo$matriz[names(root),]
+      dator<-as.numeric(cola[1])
+      colavisiatados<-c(colavisiatados,cola[1])
+      cola<-cola[-1]
+      verx<-all(x==0)
+      if (verx!=TRUE) {
+        ordx<-c(sort(x[x>0]))
+         for (variable in 1:length(ordx)) {
+            ordx[variable]<-ordx[variable]+dator
+            cola<-c(cola,ordx[variable])
+         }
+            cola<-sort(cola)
+            root<-cola[1]
+            print(root)
+            while (any((names(cola[1])==names(colavisiatados)))==TRUE) {
+              cola<-cola[-1]
+              root<-cola[1]
+            }
+         }else{
+           print(cola)
+            root<-cola[1]
+            }#finif
+      }#finif
+  #fin
+    }
+}

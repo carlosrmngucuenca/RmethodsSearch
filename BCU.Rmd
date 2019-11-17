@@ -1,0 +1,331 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*. 
+```{r}
+cold<-c()
+bolero<-function(variable){
+  
+  
+  cold<-c(cold,variable)
+  print(cold) 
+
+}
+
+
+for (variable in 1:3) {
+    bolero(variable)
+}
+```
+
+```{r}
+
+
+IDS<-function(Raiz, Meta, nivel) {
+   cola<-c()
+  for (i in 0:nivel) {
+    #RaizRaiz
+  
+  print("Entra")
+ 
+ 
+  print("Entra")
+  print(Raiz)
+    if (Raiz$get_hasnivel() == FALSE) {
+      Raiz$set_hasnivel(TRUE)
+      Raiz$set_nivel(i)
+       cola <- c(cola, Raiz)
+      next()
+    } else{
+       print("Entra al else")
+      frente<-cola[1]
+       print(cola)
+      if(frente[[1]]$get_nivel()==i){
+        
+      }
+      #cola <- c(cola, Raiz)
+      #cola$add(Raiz)
+      cat("Recorrido  : ->  ", frente[[1]]$get_dato(), "\n")
+      #cat("el nuevo valor e raiz es  : ->  ",Raiz$get_dato(),"\n")
+      #cat("el valor de la cola al entrar es : ->  ",Raiz$get_dato(),"\n")
+      for (obj.nodo in cola) {
+         if (length(obj.nodo$get_lista()) != 0) {
+           cat("Entra al for de la cola ","\n")
+            #cat("el valor de el tam   es : ->  ",length(Raiz$get_lista()),"\n")
+            for (variable in 1:length(obj.nodo$get_lista())) {
+              #cat("el valor de el contador   es : ->  ",variable,"\n")
+              Nodohijo = obj.nodo$get_lista()[[variable]]
+              #cat("el valor de un hijo de un nodo   es : ->  ",Nodohijo$get_dato(),"\n")
+              if (Nodohijo$get_visited() == FALSE &&
+                  Nodohijo$get_added() == FALSE) {
+                Nodohijo$set_added(TRUE)
+                Nodohijo$set_nivel(i)
+                Nodohijo$set_hasnivel(TRUE)
+                cola<-c(cola,Nodohijo)
+                
+                
+                
+              }
+            }
+          }
+      }
+      cola<-cola[-1]
+      
+      #print("sale del while")
+      #return(0)
+      
+      
+    }#fin elseprincipal
+  
+  }
+  
+  
+  
+}
+
+k<-function(){
+  print("hols")
+}
+NodoR<-nodos[["A"]]
+NodoM<-nodos[["C"]]
+IDS(NodoR,NodoM,2)
+```
+
+```{r}
+arnod<-read.csv("ArchivoPrubas.csv",header = TRUE, sep = ",",stringsAsFactors = FALSE)
+dataf=data.frame(arnod)
+datap<-dataf[!((dataf$fin)==""),c(1,2,3)]
+datap
+node<-sort(union(unique(datap$Inicio),unique(datap$fin)),decreasing = FALSE)
+node
+numerofilas<-nrow(datap)
+cat(numerofilas,"\n")
+cat(node,"\n")
+Migrafo<-Grafo$new()
+
+
+Migrafo$set_matriz_aristapeso(length(node),c(node))
+print("mexperimento la emcion que siento pero no soy esa emocion")
+Migrafo$get_matrix()
+```
+```{r}
+BCUM<-function(Raiz,Meta){
+  
+  cola<-c()
+  colavisiatados<-c()
+  root<-Migrafo$matriz[Raiz,Raiz]
+  cat(Raiz,"\n")
+  names(root)<-c(as.character(Raiz))
+  cola<-c(cola,root)
+  cat("--------","\n")
+  print(cola[1])
+  cat("--------","\n")
+  print(root[1])
+  cat("--------","\n")
+  f<-names(cola[1])
+  print(f)
+  while (length(cola)!=0) {
+    if(Raiz==Meta){
+      break
+    }else{
+      x<-Migrafo$matriz[names(root),]
+      verx<-all(x==0)
+        while (verx==TRUE ) {
+          cat("--------ingresa a verificar ","\n")
+          root<-cola[i]
+          cat("--------ingresa a verificar root ","\n")
+          print(root)
+          dator<-0
+          
+          #aqui
+          x<-Migrafo$matriz[names(root),]
+          if(names(root)==Meta){break}
+          if(all(x==0)==TRUE){
+            i=i+1
+          }else{ break }
+          
+          cat("-------------------- ","\n")
+        }
+     #inicio
+      
+      if(names(root)==Meta){break}
+      dator<-as.numeric(cola[1])
+      cat("--------ingresa a dator ","\n")
+      print(dator)
+      cola<-cola[-1]
+      cat("-------- ","\n")
+      print(cola[1])
+      cat("--------sale de dator ","\n")
+      cat("-------- Entra ord --- ","\n")
+      ordx<-c(sort(x[x>0]))
+      print(ordx)
+      cat("-------- indice 1 --- ","\n")
+      print(ordx[1])
+      cat("-------- sale  ord --- ","\n")
+        if (length(length(ordx))!=0 ) {
+         for (variable in 1:length(ordx)) {
+            ordx[variable]<-ordx[variable]+dator
+            cat("-------- ord[variable] --- ","\n")
+            print(ordx[variable])
+            cola<-c(cola,ordx[variable])
+            cat("-------- sale --- ","\n")
+         }
+          cola<-sort(cola)
+          cat("-------- cola sort --- ","\n")
+          print(cola)
+          cat("-------- sale cola sort --- ","\n")
+          cat("-------- cola peek --- ","\n")
+          print(cola[1])
+          cat("-------- -vsitados- --- ","\n")
+          print(colavisiatados)
+          cat("-------- sale cola peek --- ","\n")
+          
+          
+          if (any((names(cola[1])==names(colavisiatados)))==TRUE){cola<-cola[-1]}
+          colavisiatados<-c(colavisiatados,cola[1])
+          root<-cola[1]
+          cat("-------- nuevo raiz --- ","\n")
+          print(root)
+          cat("-------- nuevo raiz sale  --- ","\n")
+          cat("-------- visitado --- ","\n")
+          print(colavisiatados)
+          cat("-------- sale de print visitados  --- ","\n")
+          cat("-------- cola  --- ","\n")
+          print(cola)
+          cat("-------- sale cola  --- ","\n")
+        }else{
+          cat("no hay hijos")
+        }
+    #fin
+    }
+    
+  }
+  #print("sale del while")
+  return(0)
+  
+  
+  
+}#fin BCU
+```
+
+```{r}
+BCU<-function(Raiz,Meta){
+  cola<-c()
+  colavisiatados<-c()
+  root<-Migrafo$matriz[Raiz,Raiz]
+  names(root)<-c(as.character(Raiz))
+  cola<-c(cola,root)
+  while (length(cola)!=0) {
+    if(names(root)==Meta){
+      print("encontrado")
+      break
+    }else{
+      print(names(root))
+      x<-Migrafo$matriz[names(root),]
+      dator<-as.numeric(cola[1])
+      colavisiatados<-c(colavisiatados,cola[1])
+      cola<-cola[-1]
+      verx<-all(x==0)
+      if (verx!=TRUE) {
+        ordx<-c(sort(x[x>0]))
+         for (variable in 1:length(ordx)) {
+            ordx[variable]<-ordx[variable]+dator
+            cola<-c(cola,ordx[variable])
+         }
+            cola<-sort(cola)
+            root<-cola[1]
+            print(root)
+            while (any((names(cola[1])==names(colavisiatados)))==TRUE) {
+              cola<-cola[-1]
+              root<-cola[1]
+            }
+         }else{
+           print(cola)
+            root<-cola[1]
+            }#finif
+      }#finif
+  #fin
+    }
+}
+
+BCU("A","F")
+```
+
+```{r}
+HCS<-function(Raiz,Meta){
+  
+  cola<- colapr$new()
+  
+  cola$add(Raiz)
+  cola$Inicialisar()
+  cola$peek()
+  print(Raiz)
+  cat("Recorrido  : ->  ",Raiz$get_dato(),"\n")
+  #cat("el nuevo valor e raiz es  : ->  ",Raiz$get_dato(),"\n")
+  #cat("el valor de la cola al entrar es : ->  ",Raiz$get_dato(),"\n")
+  while (cola$vaciaq()!=TRUE) {
+    print("entras \n")
+    if(Raiz$get_dato()==Meta$get_dato()){
+      cola$remove()
+      
+      break
+    }else{
+      
+      Raiz$set_visitado(TRUE)
+      cat("el valor visiatdo  de la Raiz es : ->  ",Raiz$get_visited(),"\n")
+      cola$remove()
+      
+      
+      cat("se vacio ","\n")
+      if (length(Raiz$get_lista())!=0 ) {
+        cat("el valor de el tam   es : ->  ",length(Raiz$get_lista()),"\n")
+        for (variable in 1:length(Raiz$get_lista())) {
+          cat("el valor de el contador   es : ->  ",variable,"\n")
+          Nodohijo=Raiz$get_lista()[[variable]]
+          cat("el valor de un hijo de un nodo   es : ->  ",Nodohijo$get_dato(),"\n")
+          if (Nodohijo$get_visited() == FALSE && Nodohijo$get_added()==FALSE ){
+            Nodohijo$set_added(TRUE)
+            cola$add(Nodohijo)
+            if(cola$vacia()!=TRUE){
+              cat("el valor  en la cola    es : ->  ",cola$peek(),"\n")
+            }
+            
+            
+          }
+        }
+      }
+      if(cola$vaciaq()!=TRUE){
+        cat("EntrA VERIFIAR ","\n")
+        Raiz<-cola$peek();
+        print(Raiz)
+        cat("Recorrido  : ->  ",Raiz$get_dato(),"\n")
+        cola$vaciar()
+        
+      }
+      
+      
+    }
+    
+  }
+  #print("sale del while")
+  return(0)
+  
+  
+}
+NodoR<-nodos[[R]]
+NodoM<-nodos[[M]]
+NodoR
+NodoM
+HCS(NodoR,NodoM)
+
+```
+
+Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Ctrl+Alt+I*.
+
+When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Ctrl+Shift+K* to preview the HTML file).
+
+The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
